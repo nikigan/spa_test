@@ -1,12 +1,16 @@
+import axios from 'axios';
+
 export default class AuthService {
 
   loginUser(login, password) {
     return new Promise(((resolve, reject) => {
       setTimeout(async () => {
-        const res = await fetch('./users.json');
-        if (!res.ok)
-          throw new Error('Could not fetch users');
-        const users = await res.json();
+        const res = await axios
+          .get('./users.json')
+          .catch(() => {
+            throw new Error('Could not fetch users');
+          });
+        const users = await res.data;
 
         const correctUser = users.filter(user => (user.login === login && user.password === password));
         
@@ -24,10 +28,12 @@ export default class AuthService {
   }
 
   async getUserInfo(userToken) {
-    const res = await fetch('./users.json');
-    if (!res.ok)
-      throw new Error('Could not fetch users');
-    const users = await res.json();
+    const res = await axios
+      .get('./users.json')
+      .catch(() => {
+        throw new Error('Could not fetch users');
+      });
+    const users = await res.data;
 
     return users.filter(user => (user.userToken === userToken))[0];
   }

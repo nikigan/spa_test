@@ -1,0 +1,42 @@
+body {
+  background: #FAFAFA;
+}
+
+.login-page {
+
+  .login-wrapper {
+    padding: 40px 80px;
+    background: #FFFFFF;
+    border: 1px solid rgba(39, 39, 39, 0.1);
+
+    .form-header {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 28px;
+    }
+
+    .login-logo {
+      display: block;
+      margin: 0 auto 16px;
+    }
+
+    .login-button {
+      display: block;
+      width: 50%;
+      margin: 16px auto auto;
+    }
+
+
+    .ant-form-item {
+      margin-bottom: 4px;
+
+      &-label {
+        margin-bottom: 0;
+        font-size: 16px;
+        line-height: 22px;
+        color: rgba(23, 23, 25, 0.3);
+      }
+    }
+  }
+}

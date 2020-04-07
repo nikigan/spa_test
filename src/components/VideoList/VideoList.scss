@@ -1,0 +1,29 @@
+.video-list-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .button-block {
+    display: flex;
+    margin-left: auto;
+
+    .anticon {
+      color: #272727;
+      opacity: 0.3;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .search-query {
+    display: block;
+    font-size: 16px;
+    line-height: 24px;
+
+    .query-string {
+      font-weight: 500;
+    }
+  }
+}

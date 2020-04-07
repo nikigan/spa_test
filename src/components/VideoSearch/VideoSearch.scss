@@ -1,0 +1,26 @@
+.search-block{
+  margin-bottom: 32px;
+  .search-input {
+    .ant-input-wrapper {
+      display: flex;
+      align-items: stretch;
+      .ant-input-group-addon {
+        display: flex;
+        .ant-btn {
+          height: 100%;
+        }
+      }
+    }
+    .ant-input {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 100%;
+      color: #272727;
+    }
+  }
+  .search-header {
+    margin-bottom: 20px;
+  }
+
+}

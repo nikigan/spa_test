@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './VideoList.scss';
 import {connect} from 'react-redux';
 import {Button, Row} from "antd";
@@ -10,24 +10,22 @@ import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutl
 import AppstoreOutlined from "@ant-design/icons/lib/icons/AppstoreOutlined";
 import {onCardLayout, onListLayout} from "../../actions";
 
-class VideoList extends Component {
+const VideoList = props => {
+  const {items: videos, loading, query, layout, onCardLayout, onListLayout} = props;
 
-  render() {
-    const {items: videos, loading, query, layout, onCardLayout, onListLayout} = this.props;
+  const listLayout = layout === 'list';
 
-    const listLayout = layout === 'list';
-    
-    const renderVideos = videos.map(v => {
-      return (
-        <Video className={layout} key={v.id} video={v}/>
-      )
-    });
-
-    if (loading) {
-      return (<Loading/>);
-    }
-
+  const renderVideos = videos.map(v => {
     return (
+        <Video layout={layout} key={v.id} video={v}/>
+    )
+  });
+
+  if (loading) {
+    return (<Loading/>);
+  }
+
+  return (
       <React.Fragment>
         {!!videos.length &&
         <div className='video-list-header'>
@@ -35,22 +33,21 @@ class VideoList extends Component {
             <span className='query-string'> «{query}»:</span>
           </span>
           <div className='button-block'>
-            <Button 
-              type='link'
-              icon={<UnorderedListOutlined className={listLayout? 'active':''}/>}
-            onClick={onListLayout}/>
             <Button
-              type='link'
-              icon={<AppstoreOutlined className={listLayout? '':'active'}/>}
-            onClick={onCardLayout}/></div>
+                type='link'
+                icon={<UnorderedListOutlined className={listLayout ? 'active' : ''}/>}
+                onClick={onListLayout}/>
+            <Button
+                type='link'
+                icon={<AppstoreOutlined className={listLayout ? '' : 'active'}/>}
+                onClick={onCardLayout}/></div>
         </div>}
         <Row type='flex' gutter={[16, 16]}>
           {renderVideos}
         </Row>
       </React.Fragment>
-    );
-  }
-}
+  );
+};
 
 const mapStateToProps = ({video: {items, loading, query, layout}}) => {
   return {

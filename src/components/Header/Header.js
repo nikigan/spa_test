@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import sibdevLogo from '../../assets/svg/sibdev-logo.svg';
 import {onUserLoggedOut} from "../../actions";
 import './Header.scss';
@@ -6,13 +6,12 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {Button} from "antd";
 
-class Header extends Component {
-  render() {
-    const {userInfo, onUserLoggedOut} = this.props;
+const Header = props => {
+  const {userInfo, onUserLoggedOut} = props;
 
-    if (!userInfo) return null;
-    
-    return (
+  if (!userInfo) return null;
+
+  return (
       <div className='header'>
         <div className="container">
           <div className='row'>
@@ -26,16 +25,15 @@ class Header extends Component {
                 <span className='user-login'> {userInfo.login}</span>
               </span>
               <Button
-                type='link'
-                onClick={onUserLoggedOut}
-              className='exit-button'>Выход</Button>
+                  type='link'
+                  onClick={onUserLoggedOut}
+                  className='exit-button'>Выход</Button>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
+  );
+};
 
 const mapStateToProps = ({userInfo}) => {
   return {

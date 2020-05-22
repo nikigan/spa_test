@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import 'antd/es/input/style/index.css';
 import 'antd/es/button/style/index.css';
 import './LoginPage.scss';
@@ -9,34 +9,35 @@ import {onUserLogIn} from "../../actions";
 import sibdevLogo from '../../assets/svg/sibdev-logo.svg'
 import {connect} from 'react-redux';
 
-class LoginPage extends React.Component {
+const LoginPage = props => {
 
-  #alreadyAuth = () => {
+  const alreadyAuth = useCallback(() => {
     Message({
-      message: 'Вы уже авторизованы как ' + this.props.userInfo?.login,
+      message: 'Вы уже авторизованы как ' + props.userInfo?.login,
       type: 'warning'
     });
-    this.props.history.push('/');
+    props.history.push('/');
+  }, [props.history, props.userInfo]);
+
+
+
+  useEffect(() => {
+    if (props.userInfo) {
+      alreadyAuth();
+    }
+  });
+
+  useEffect(() => {
+    if (props.userInfo){
+      alreadyAuth();
+    }
+  }, [alreadyAuth, props.userInfo]);
+
+  const onSubmit = ({login, password}) => {
+    props.onUserLogIn(login, password);
   };
 
-  componentDidMount() {
-    if (this.props.userInfo) {
-      this.#alreadyAuth();
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.userInfo !== this.props.userInfo) {
-      this.#alreadyAuth();
-    }
-  }
-
-  onSubmit = ({login, password}) => {
-    this.props.onUserLogIn(login, password);
-  };
-
-  render() {
-    const {auth: {loading}} = this.props;
+    const {auth: {loading}} = props;
 
     return (
       <div className="login-page container">
@@ -47,7 +48,7 @@ class LoginPage extends React.Component {
             <Form
               name="basic"
               layout="vertical"
-              onFinish={this.onSubmit}>
+              onFinish={onSubmit}>
 
               <Form.Item
                 label="Логин"
@@ -75,8 +76,7 @@ class LoginPage extends React.Component {
         </div>
       </div>
     );
-  }
-}
+};
 
 const mapStateToProps = ({userInfo, auth}) => {
   return {
